@@ -53,8 +53,7 @@ class _MainScreenState extends State<MainScreen> {
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Theme.of(context).primaryColor,
           selectedItemColor: Theme.of(context).accentColor,
-          unselectedItemColor: Colors.grey[500],
-          elevation: 20,
+          unselectedItemColor: Colors.grey[350],
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -66,12 +65,8 @@ class _MainScreenState extends State<MainScreen> {
               title: Text('Home'),
             ),
             BottomNavigationBarItem(
-              icon: Icon(
-                Feather.user,
-              ),
-              title: Text(
-                'Profie',
-              ),
+              icon: Icon(Feather.user),
+              title: Text('Profile'),
             ),
           ],
           onTap: navigationTapped,
@@ -88,7 +83,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: 0);
+    _pageController = PageController(initialPage: _page);
   }
 
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ThemeConfig {
-  static Color lightPrimary = Color(0xFF035A77);
+  static Color lightPrimary = Color(0xFF0F1E2E);
   static Color lightAccent = Color(0xFF2D8F3F);
   static Color lightBG = Color(0xFFF0F0F0);
 
