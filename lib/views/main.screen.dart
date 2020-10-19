@@ -3,7 +3,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:werecycle/utils/dialogs.dart';
 import 'package:werecycle/views/home.screen.dart';
-import 'package:werecycle/views/notifications.screen.dart';
+import 'package:werecycle/views/pickup.screen.dart';
 import 'package:werecycle/views/profile.screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -27,7 +27,8 @@ class _MainScreenState extends State<MainScreen> {
           controller: _pageController,
           onPageChanged: onPageChanged,
           children: <Widget>[
-            NotificationsScreen(),
+            PickupScreen(),
+            // NotificationsScreen(),
             HomeScreen(),
             ProfileScreen(),
           ],
