@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:werecycle/utils/dialogs.dart';
 import 'package:werecycle/views/home.screen.dart';
@@ -85,6 +86,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _page);
+    _getPermission();
   }
 
   @override
@@ -97,5 +99,13 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       this._page = page;
     });
+  }
+
+  Future<void> _getPermission() async {
+    final location = Location();
+    final hasPermissions = await location.hasPermission();
+    if (hasPermissions != PermissionStatus.granted) {
+      await location.requestPermission();
+    }
   }
 }

@@ -92,22 +92,15 @@ class _HomeScreenState extends State<HomeScreen> {
               child: MapboxMap(
             accessToken: Constants.mapboxKey,
             onMapCreated: onMapCreated,
-            // onStyleLoadedCallback: () => onStyleLoaded(controllerOne),
-            initialCameraPosition: CameraPosition(
-              target: center,
-              zoom: 11.0,
-            ),
+            initialCameraPosition: CameraPosition(target: center, zoom: 12.5),
             styleString: MapboxStyles.MAPBOX_STREETS,
             cameraTargetBounds: CameraTargetBounds(LatLngBounds(
-              southwest: LatLng(-20.523967, 57.299414),
-              northeast: LatLng(-19.970581, 57.807718),
+              southwest: LatLng(-20.541274359910105, 57.28147899054795),
+              northeast: LatLng(-19.939786566621578, 57.872003872393236),
             )),
-            minMaxZoomPreference: MinMaxZoomPreference(7.5, 15),
-            // gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-            //   Factory<OneSequenceGestureRecognizer>(
-            //     () => EagerGestureRecognizer(),
-            //   ),
-            // ].toSet(),
+            minMaxZoomPreference: MinMaxZoomPreference(7.5, 20),
+            myLocationEnabled: true,
+            myLocationTrackingMode: MyLocationTrackingMode.Tracking,
           )),
         ));
   }
