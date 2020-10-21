@@ -14,10 +14,10 @@ class _HomeScreenState extends State<HomeScreen> {
   MapboxMapController controller;
   bool loaded = false;
   List<Bin> bins = [
-    Bin("0", LatLng(-20.241766, 57.409693), "Bottles", false),
-    Bin("1", LatLng(-20.276551, 57.426173), "Bottles", false),
-    Bin("2", LatLng(-20.360260, 57.412440), "Bottles", true),
-    Bin("3", LatLng(-20.443925, 57.352702), "Bottles", false),
+    Bin("0", LatLng(-20.241766, 57.409693), "La Valettte", "Bottles", false),
+    Bin("1", LatLng(-20.276551, 57.426173), "Beaux Songes", "Bottles", false),
+    Bin("2", LatLng(-20.360260, 57.412440), "Black River", "Bottles", true),
+    Bin("3", LatLng(-20.443925, 57.352702), "Coteau Raffin", "Bottles", false),
   ];
 
   void onMapCreated(MapboxMapController controller) {
@@ -61,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onSymbolTapped(Symbol symbol) {
-    showBottomSheet(bins.firstWhere((bin) => bin.id == symbol.data["id"]));
+    Bin bin = bins.firstWhere((bin) => bin.id == symbol.data["id"]);
+    controller
+        .animateCamera(CameraUpdate.newLatLng(bin.location))
+        .then((_) => showBottomSheet(bin));
   }
 
   @override
