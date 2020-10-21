@@ -36,6 +36,13 @@ class BinDetailsBottomSheet extends StatelessWidget {
           ),
           Card(
             child: ListTile(
+              title: Text(bin.address),
+              subtitle: Text(
+                  '(${bin.location.latitude.toStringAsPrecision(4)} - ${bin.location.longitude.toStringAsPrecision(4)})'),
+            ),
+          ),
+          Card(
+            child: ListTile(
               title: Text("Material"),
               subtitle: Text(bin.material),
             ),
