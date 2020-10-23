@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:werecycle/utils/router.dart';
 import 'package:werecycle/utils/theme_config.dart';
+import 'package:werecycle/views/home.screen.dart';
+import 'package:werecycle/views/main.screen.dart';
 import 'package:werecycle/views/otp.screen.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -9,11 +13,62 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController phoneController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool loading = false;
+
+  void _verifyPhoneNumber(String phoneNumber) async {
+    setState(() {
+      loading = !loading;
+    });
+
+    await _auth.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      timeout: const Duration(seconds: 60),
+      verificationCompleted: (PhoneAuthCredential credential) {
+        print("Logged in through auto verify");
+        MyRouter.pushPage(context, MainScreen());
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print(e);
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            'Verification failed.',
+            style: TextStyle(color: Colors.white),
+          ),
+          duration: Duration(milliseconds: 800),
+        ));
+      },
+      codeSent: (String verificationId, int resendToken) {
+        print("Code sent");
+        MyRouter.pushPage(context, OTPScreen());
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            'Verification is taking too long. Please try again',
+            style: TextStyle(color: Colors.white),
+          ),
+          duration: Duration(milliseconds: 800),
+        ));
+      },
+    );
+
+    // MyRouter.pushPage(context, OTPScreen())
+
+    setState(() {
+      phoneController.text = "";
+      loading = !loading;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -75,21 +130,22 @@ class _AuthScreenState extends State<AuthScreen> {
                   constraints: const BoxConstraints(maxWidth: 500),
                   child: RaisedButton(
                     onPressed: () {
-                      MyRouter.pushPage(context, OTPScreen());
-                      // if (phoneController.text.isNotEmpty) {
-                      //   loginStore.getCodeWithPhoneNumber(
-                      //       context, phoneController.text.toString());
-                      // } else {
-                      //   loginStore.loginScaffoldKey.currentState
-                      //       .showSnackBar(SnackBar(
-                      //     behavior: SnackBarBehavior.floating,
-                      //     backgroundColor: Colors.red,
-                      //     content: Text(
-                      //       'Please enter a phone number',
-                      //       style: TextStyle(color: Colors.white),
-                      //     ),
-                      //   ));
-                      // }
+                      if (phoneController.text.isNotEmpty) {
+                        // TODO: Add +230 if missing
+                        _verifyPhoneNumber(
+                          phoneController.text.toString().trim(),
+                        );
+                      } else {
+                        // TODO: use regex to catch invalid number
+                        _scaffoldKey.currentState.showSnackBar(SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text(
+                            'Please enter a phone number',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          duration: Duration(milliseconds: 800),
+                        ));
+                      }
                     },
                     color: ThemeConfig.lightPrimary,
                     shape: const RoundedRectangleBorder(
@@ -111,13 +167,32 @@ class _AuthScreenState extends State<AuthScreen> {
                                   const BorderRadius.all(Radius.circular(20)),
                               color: ThemeConfig.lightAccent,
                             ),
-                            child: Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                          )
+                            child: loading
+                                ? SpinKitFadingCircle(
+                                    color: Colors.white,
+                                    size: 16.0,
+                                  )
+                                : Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
+                          ),
                         ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 42,
+                  child: FlatButton(
+                    onPressed: () => MyRouter.pushPageReplacement(
+                        context, HomeScreen(showAppbar: true)),
+                    child: Text(
+                      "Skip Login",
+                      style: TextStyle(
+                        color: ThemeConfig.lightAccent,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
                   ),

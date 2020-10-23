@@ -15,7 +15,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   startTimeout() {
-    return new Timer(Duration(seconds: 3), handleTimeout);
+    return new Timer(Duration(seconds: 1), handleTimeout);
   }
 
   void handleTimeout() {
@@ -26,6 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await GetStorage.init();
     await Firebase.initializeApp();
 
+    // TODO: check if first time
     // Check if logged in
     final box = GetStorage();
     String phoneNumber = box.read("phoneNumber");
