@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
@@ -49,21 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void showBottomSheet(Bin bin) {
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        ),
-      ),
-      builder: (BuildContext bc) => BinDetailsBottomSheet(
-        bin: bin,
-      ),
-    );
-  }
-
   void _onSymbolTapped(Symbol symbol) {
     Bin bin = bins.firstWhere((bin) => bin.id == symbol.data["id"]);
     controller
@@ -79,6 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    new Timer(Duration(milliseconds: 1000), _loadBins);
+
     super.initState();
   }
 
@@ -114,5 +103,20 @@ class _HomeScreenState extends State<HomeScreen> {
             myLocationTrackingMode: MyLocationTrackingMode.Tracking,
           )),
         ));
+  }
+
+  void showBottomSheet(Bin bin) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+      ),
+      builder: (BuildContext bc) => BinDetailsBottomSheet(
+        bin: bin,
+      ),
+    );
   }
 }

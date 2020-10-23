@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final box = GetStorage();
     // Check if first time
     bool firstTime = box.read("firstTime") ?? true;
-    box.write("firstTime", !firstTime);
+    box.write("firstTime", false);
     // Check if logged in
     String phoneNumber = box.read("phoneNumber");
 
