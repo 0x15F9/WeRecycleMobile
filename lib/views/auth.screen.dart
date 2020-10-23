@@ -59,10 +59,10 @@ class _AuthScreenState extends State<AuthScreen> {
       },
     );
 
-    setState(() {
-      phoneController.text = "";
-      loading = !loading;
-    });
+    // setState(() {
+    //   phoneController.text = "";
+    //   loading = !loading;
+    // });
   }
 
   @override
