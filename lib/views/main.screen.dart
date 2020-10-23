@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:location/location.dart';
-import 'package:provider/provider.dart';
 import 'package:werecycle/utils/dialogs.dart';
 import 'package:werecycle/views/home.screen.dart';
-import 'package:werecycle/views/pickup.screen.dart';
+import 'package:werecycle/views/notifications.screen.dart';
 import 'package:werecycle/views/profile.screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -28,30 +26,11 @@ class _MainScreenState extends State<MainScreen> {
           controller: _pageController,
           onPageChanged: onPageChanged,
           children: <Widget>[
-            PickupScreen(),
-            // NotificationsScreen(),
+            NotificationsScreen(),
             HomeScreen(),
             ProfileScreen(),
           ],
         ),
-
-        // MultiProvider(
-        //   providers: [
-        //     ChangeNotifierProvider(create: (context) => Categories()),
-        //     ChangeNotifierProvider(create: (context) => OrderProvider()),
-        //     ChangeNotifierProvider(create: (context) => UserProvider()),
-        //   ],
-        //   child: PageView(
-        //     physics: NeverScrollableScrollPhysics(),
-        //     controller: _pageController,
-        //     onPageChanged: onPageChanged,
-        //     children: <Widget>[
-        //       HomeScreen(region: widget.region),
-        //       OrdersScreen(),
-        //       ProfileScreen(),
-        //     ],
-        //   ),
-        // ),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Theme.of(context).primaryColor,
           selectedItemColor: Theme.of(context).accentColor,
@@ -86,7 +65,6 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _page);
-    _getPermission();
   }
 
   @override
@@ -99,13 +77,5 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       this._page = page;
     });
-  }
-
-  Future<void> _getPermission() async {
-    final location = Location();
-    final hasPermissions = await location.hasPermission();
-    if (hasPermissions != PermissionStatus.granted) {
-      await location.requestPermission();
-    }
   }
 }

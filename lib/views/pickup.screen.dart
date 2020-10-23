@@ -57,6 +57,7 @@ class _PickupScreenState extends State<PickupScreen> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            automaticallyImplyLeading: false,
             floating: true,
             expandedHeight: 270,
             flexibleSpace: MapboxMap(

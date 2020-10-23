@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:location/location.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:werecycle/components/bin_details.bottom_sheet.dart';
 import 'package:werecycle/models/bin.model.dart';
@@ -67,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     new Timer(Duration(milliseconds: 1000), _loadBins);
-
+    _getPermission();
     super.initState();
   }
 
@@ -118,5 +119,14 @@ class _HomeScreenState extends State<HomeScreen> {
         bin: bin,
       ),
     );
+  }
+
+  Future<void> _getPermission() async {
+    final location = Location();
+    final hasPermissions = await location.hasPermission();
+    _getPermission();
+    if (hasPermissions != PermissionStatus.granted) {
+      await location.requestPermission();
+    }
   }
 }
