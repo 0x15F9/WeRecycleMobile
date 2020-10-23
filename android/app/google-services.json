@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "120248036628",
+    "firebase_url": "https://werecycle-digicup.firebaseio.com",
+    "project_id": "werecycle-digicup",
+    "storage_bucket": "werecycle-digicup.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120248036628:android:fe4a674d24111cec33e601",
+        "android_client_info": {
+          "package_name": "org.werecyclemauritius.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120248036628-2cin7tjkogftq7iavu9765pbeoimhnj7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.werecyclemauritius.app",
+            "certificate_hash": "a319bff5225646ee4d48ba6d6e782a9f7d627f8a"
+          }
+        },
+        {
+          "client_id": "120248036628-gi01mq45pcguibronervl7jaapqseeho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcAbw6GUhft0Sn3kiqizEEDN0MZGTN01s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120248036628-gi01mq45pcguibronervl7jaapqseeho.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
