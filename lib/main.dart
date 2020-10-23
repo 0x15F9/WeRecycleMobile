@@ -6,12 +6,7 @@ import 'package:werecycle/utils/theme_config.dart';
 import 'package:werecycle/views/splash.screen.dart';
 
 void main() {
-  runApp(MyApp()
-      // MultiProvider(
-      //   providers: [],
-      //   child: MyApp(),
-      // ),
-      );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
