@@ -27,7 +27,7 @@ class PickupRequestTile extends StatelessWidget {
           subtitle:
               Text('on ' + DateFormat("dd MMM yyyy").format(pickup.dateTime)),
           trailing: Icon(Feather.arrow_right),
-          onTap: () => MyRouter.pushPage(context, PickupScreen()),
+          onTap: () => MyRouter.pushPage(context, PickupScreen(pickup: pickup)),
         ),
       ),
     );
