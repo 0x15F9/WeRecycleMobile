@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:werecycle/utils/constants.dart';
 import 'package:werecycle/utils/router.dart';
 import 'package:werecycle/views/auth.screen.dart';
+import 'package:werecycle/views/home.screen.dart';
 import 'package:werecycle/views/main.screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -26,14 +27,18 @@ class _SplashScreenState extends State<SplashScreen> {
     await GetStorage.init();
     await Firebase.initializeApp();
 
-    // TODO: check if first time
-    // Check if logged in
     final box = GetStorage();
+    // Check if first time
+    bool firstTime = box.read("firstTime") ?? true;
+    box.write("firstTime", !firstTime);
+    // Check if logged in
     String phoneNumber = box.read("phoneNumber");
 
     MyRouter.pushPageReplacement(
       context,
-      phoneNumber == null ? AuthScreen() : MainScreen(),
+      firstTime
+          ? AuthScreen()
+          : phoneNumber == null ? HomeScreen(showAppbar: true) : MainScreen(),
     );
   }
 
