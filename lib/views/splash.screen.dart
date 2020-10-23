@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:werecycle/utils/constants.dart';
 import 'package:werecycle/utils/router.dart';
@@ -20,6 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   changeScreen() async {
+    await Firebase.initializeApp();
     MyRouter.pushPageReplacement(
       context,
       MainScreen(),
