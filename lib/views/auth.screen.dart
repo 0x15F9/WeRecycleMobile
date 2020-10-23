@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:werecycle/utils/router.dart';
 import 'package:werecycle/utils/theme_config.dart';
+import 'package:werecycle/views/otp.screen.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -57,7 +59,6 @@ class _AuthScreenState extends State<AuthScreen> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32),
                     child: TextFormField(
-                      // padding: const EdgeInsets.symmetric(horizontal: 16),
                       decoration: InputDecoration(
                         hintText: "5 895 1245",
                         isDense: true,
@@ -65,7 +66,6 @@ class _AuthScreenState extends State<AuthScreen> {
                       controller: phoneController,
                       keyboardType: TextInputType.phone,
                       maxLines: 1,
-                      // placeholder: '+33...',
                     ),
                   ),
                 ),
@@ -75,6 +75,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   constraints: const BoxConstraints(maxWidth: 500),
                   child: RaisedButton(
                     onPressed: () {
+                      MyRouter.pushPage(context, OTPScreen());
                       // if (phoneController.text.isNotEmpty) {
                       //   loginStore.getCodeWithPhoneNumber(
                       //       context, phoneController.text.toString());
