@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:werecycle/models/bin.model.dart';
+import 'package:werecycle/utils/router.dart';
 import 'package:werecycle/utils/theme_config.dart';
+import 'package:werecycle/views/notify_full.screen.dart';
 
 class BinDetailsBottomSheet extends StatelessWidget {
   final Bin bin;
@@ -32,7 +34,7 @@ class BinDetailsBottomSheet extends StatelessWidget {
             ),
             elevation: 0,
             backgroundColor: Colors.white,
-            actions: [IconButton(icon: Icon(Feather.bell), onPressed: null)],
+            // actions: [IconButton(icon: Icon(Feather.bell), onPressed: null)],
           ),
           Card(
             child: ListTile(
@@ -56,6 +58,19 @@ class BinDetailsBottomSheet extends StatelessWidget {
               ),
             ),
           ),
+          Expanded(child: Container()),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: SizedBox(
+              width: double.infinity,
+              child: OutlineButton.icon(
+                onPressed: () => MyRouter.pushPage(context, NotifyFullScreen()),
+                icon: Icon(Feather.bell),
+                label: Text("Report bin"),
+                borderSide: BorderSide(color: Colors.red),
+              ),
+            ),
+          )
         ],
       );
 }
