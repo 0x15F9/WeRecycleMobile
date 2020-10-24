@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -30,7 +32,7 @@ class _PickupScreenState extends State<PickupScreen> {
 
   @override
   void initState() {
-    new Timer(Duration(milliseconds: 1000), _loadBins);
+    new Timer(Duration(milliseconds: 1500), _loadBins);
     super.initState();
   }
 
@@ -60,7 +62,6 @@ class _PickupScreenState extends State<PickupScreen> {
             floating: true,
             expandedHeight: 270,
             flexibleSpace: MapboxMap(
-              // FIXME: Vertical gesture does not work
               accessToken: Constants.mapboxKey,
               onMapCreated: onMapCreated,
               initialCameraPosition: CameraPosition(
@@ -73,6 +74,10 @@ class _PickupScreenState extends State<PickupScreen> {
                   northeast: LatLng(-19.970581, 57.807718),
                 ),
               ),
+              gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+                Factory<OneSequenceGestureRecognizer>(
+                    () => EagerGestureRecognizer()),
+              ].toSet(),
             ),
           ),
           SliverList(
