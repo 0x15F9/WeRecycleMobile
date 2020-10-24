@@ -6,25 +6,12 @@ import 'package:werecycle/main.dart';
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        title: Text("Profile"),
-        actions: [
-          IconButton(
-            icon: Icon(Feather.log_out),
-            onPressed: () {
-              GetStorage().erase();
-              runApp(MyApp());
-            },
-          )
-        ],
-      ),
-      body: Column(
+    return SafeArea(
+      child: Column(
         children: [
           Expanded(
             child: Container(
+              padding: EdgeInsets.symmetric(vertical: 16),
               constraints: const BoxConstraints(maxHeight: 340),
               margin: const EdgeInsets.symmetric(horizontal: 32),
               child: Image.asset("assets/images/profile-image.png"),
@@ -42,7 +29,23 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
+          Expanded(child: Container()),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: SizedBox(
+              width: double.infinity,
+              child: OutlineButton.icon(
+                label: Text("Log out"),
+                icon: Icon(Feather.log_out),
+                borderSide: BorderSide(color: Colors.red),
+                onPressed: () {
+                  GetStorage().erase();
+                  runApp(MyApp());
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );

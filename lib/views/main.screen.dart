@@ -29,8 +29,8 @@ class _MainScreenState extends State<MainScreen> {
           children: <Widget>[
             NotificationsScreen(),
             HomeScreen(),
-            // ProfileScreen(),
-            NotifyFullScreen(),
+            ProfileScreen(),
+            // NotifyFullScreen(),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(

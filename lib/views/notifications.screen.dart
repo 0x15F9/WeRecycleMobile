@@ -28,13 +28,8 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        title: Text("Alert"),
-      ),
-      body: ListView.builder(
+    return SafeArea(
+      child: ListView.builder(
         itemBuilder: (context, index) =>
             PickupRequestTile(pickup: pickups.elementAt(index)),
         itemCount: pickups.length,

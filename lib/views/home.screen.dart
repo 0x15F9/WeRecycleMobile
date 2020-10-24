@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    new Timer(Duration(milliseconds: 1000), _loadBins);
+    new Timer(Duration(milliseconds: 2000), _loadBins);
     _getPermission();
     super.initState();
   }

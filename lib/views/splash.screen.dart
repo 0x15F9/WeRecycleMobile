@@ -28,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Firebase.initializeApp();
 
     final box = GetStorage();
+    // TODO: also check user type
     // Check if first time
     bool firstTime = box.read("firstTime") ?? true;
     box.write("firstTime", false);
