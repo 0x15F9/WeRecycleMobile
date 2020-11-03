@@ -9,17 +9,15 @@ class NotificationsScreen extends StatelessWidget {
     Pickup(
       dateTime: DateTime(2020, 11, 20),
       bins: [
-        Bin("0", LatLng(-20.241766, 57.409693), "La Valettte", "Bottles",
-            false),
-        Bin("1", LatLng(-20.276551, 57.426173), "Beaux Songes", "Bottles",
-            false),
+        Bin(0, LatLng(-20.241766, 57.409693), "La Valettte", "Bottles", false),
+        Bin(1, LatLng(-20.276551, 57.426173), "Beaux Songes", "Bottles", false),
       ],
     ),
     Pickup(
       dateTime: DateTime(2020, 11, 10),
       bins: [
-        Bin("2", LatLng(-20.360260, 57.412440), "Black River", "Bottles", true),
-        Bin("3", LatLng(-20.443925, 57.352702), "Coteau Raffin", "Bottles",
+        Bin(2, LatLng(-20.360260, 57.412440), "Black River", "Bottles", true),
+        Bin(3, LatLng(-20.443925, 57.352702), "Coteau Raffin", "Bottles",
             false),
       ],
       accepted: true,

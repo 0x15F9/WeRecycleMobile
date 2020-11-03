@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:provider/provider.dart';
+import 'package:werecycle/provider/bins.provider.dart';
 import 'package:werecycle/utils/dialogs.dart';
 import 'package:werecycle/views/home.screen.dart';
 import 'package:werecycle/views/notifications.screen.dart';
@@ -22,16 +24,21 @@ class _MainScreenState extends State<MainScreen> {
     return WillPopScope(
       onWillPop: () => Dialogs().showExitDialog(context),
       child: Scaffold(
-        body: PageView(
-          physics: NeverScrollableScrollPhysics(),
-          controller: _pageController,
-          onPageChanged: onPageChanged,
-          children: <Widget>[
-            NotificationsScreen(),
-            HomeScreen(),
-            ProfileScreen(),
-            // NotifyFullScreen(),
+        body: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => BinsProvider()),
           ],
+          child: PageView(
+            physics: NeverScrollableScrollPhysics(),
+            controller: _pageController,
+            onPageChanged: onPageChanged,
+            children: <Widget>[
+              NotificationsScreen(),
+              HomeScreen(),
+              ProfileScreen(),
+              // NotifyFullScreen(),
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Theme.of(context).primaryColor,

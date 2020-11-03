@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:provider/provider.dart';
+import 'package:werecycle/provider/bins.provider.dart';
 import 'package:werecycle/utils/constants.dart';
 import 'package:werecycle/utils/router.dart';
 import 'package:werecycle/views/auth.screen.dart';
@@ -39,7 +41,14 @@ class _SplashScreenState extends State<SplashScreen> {
       context,
       firstTime
           ? AuthScreen()
-          : phoneNumber == null ? HomeScreen(showAppbar: true) : MainScreen(),
+          : phoneNumber == null
+              ? MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(create: (context) => BinsProvider()),
+                  ],
+                  child: HomeScreen(showAppbar: true),
+                )
+              : MainScreen(),
     );
   }
 

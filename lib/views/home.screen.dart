@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:location/location.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:provider/provider.dart';
 import 'package:werecycle/components/bin_details.bottom_sheet.dart';
 import 'package:werecycle/models/bin.model.dart';
+import 'package:werecycle/provider/bins.provider.dart';
 import 'package:werecycle/utils/constants.dart';
 import 'package:werecycle/utils/router.dart';
 import 'package:werecycle/views/auth.screen.dart';
@@ -20,12 +22,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   MapboxMapController controller;
   bool loaded = false;
-  List<Bin> bins = [
-    Bin("0", LatLng(-20.241766, 57.409693), "La Valettte", "Bottles", false),
-    Bin("1", LatLng(-20.276551, 57.426173), "Beaux Songes", "Bottles", false),
-    Bin("2", LatLng(-20.360260, 57.412440), "Black River", "Bottles", true),
-    Bin("3", LatLng(-20.443925, 57.352702), "Coteau Raffin", "Bottles", false),
-  ];
+  BinsProvider binsProvider;
+  List bins = [];
 
   void onMapCreated(MapboxMapController controller) {
     this.controller = controller;
@@ -35,21 +33,19 @@ class _HomeScreenState extends State<HomeScreen> {
   final LatLng center = const LatLng(-20.330645, 57.429606);
 
   void _loadBins() {
-    if (!loaded) {
-      bins.forEach((bin) {
-        controller.addSymbol(
-          SymbolOptions(
-            iconImage:
-                bin.isFull ? "assets/full-bin.png" : "assets/empty-bin.png",
-            geometry: bin.location,
-          ),
-          {"id": bin.id},
-        );
-      });
-      setState(() {
-        loaded = !loaded;
-      });
-    }
+    bins.forEach((bin) {
+      controller.addSymbol(
+        SymbolOptions(
+          iconImage:
+              bin.isFull ? "assets/full-bin.png" : "assets/empty-bin.png",
+          geometry: bin.location,
+        ),
+        {"id": bin.id},
+      );
+    });
+    setState(() {
+      loaded = !loaded;
+    });
   }
 
   void _onSymbolTapped(Symbol symbol) {
@@ -67,7 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    new Timer(Duration(milliseconds: 2000), _loadBins);
+    this.binsProvider = Provider.of<BinsProvider>(context, listen: false);
+    binsProvider.getBins().then((_) {
+      this.bins = binsProvider.bins;
+      _loadBins();
+    });
     _getPermission();
     super.initState();
   }
