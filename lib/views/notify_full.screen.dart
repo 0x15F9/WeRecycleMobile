@@ -1,9 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:sweetalert/sweetalert.dart';
+import 'package:werecycle/utils/constants.dart';
 
 class NotifyFullScreen extends StatefulWidget {
   @override
@@ -13,15 +17,32 @@ class NotifyFullScreen extends StatefulWidget {
 class _NotifyFullScreenState extends State<NotifyFullScreen> {
   int _currentStep = 0;
   final _picker = ImagePicker();
+  int binId;
   File _image;
 
   void _scanQR() async {
     String result = await scanner.scan();
-    // TODO:
+    binId = int.parse(result);
     print(result);
     setState(() {
       _currentStep++;
     });
+  }
+
+  Future<void> reportBin(int id, String photo) async {
+    Dio dio = new Dio();
+    var d = jsonEncode({"bin_id": id, "image": photo});
+    await dio
+        .post(
+          '${Constants.baseURL}/reports',
+          data: d,
+        )
+        .catchError((e) {});
+    SweetAlert.show(
+      context,
+      title: "Thank you!",
+      subtitle: "We have taken note of your report.",
+    );
   }
 
   void _takePhoto() async {
@@ -37,6 +58,12 @@ class _NotifyFullScreenState extends State<NotifyFullScreen> {
     setState(() {
       _currentStep++;
     });
+  }
+
+  @override
+  void initState() {
+    // reportBin(20, "photo");
+    super.initState();
   }
 
   @override
@@ -99,7 +126,8 @@ class _NotifyFullScreenState extends State<NotifyFullScreen> {
             state: _currentStep == 2 ? StepState.editing : StepState.indexed,
             title: Text('Submit'),
             content: RaisedButton(
-              onPressed: null,
+              onPressed: () =>
+                  reportBin(binId, base64Encode(_image.readAsBytesSync())),
               child: Text("Send"),
             ),
           ),

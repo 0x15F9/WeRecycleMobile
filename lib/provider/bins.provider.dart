@@ -6,6 +6,7 @@ import 'package:werecycle/utils/constants.dart';
 class BinsProvider extends ChangeNotifier {
   Dio dio = Dio();
   static String binsURL = '${Constants.baseURL}/bins';
+  static String reportsURL = '${Constants.baseURL}/reports';
   List bins = [];
 
   BinsProvider() {
@@ -14,7 +15,7 @@ class BinsProvider extends ChangeNotifier {
 
   Future<void> getBins() async {
     var res = await dio.get(binsURL).catchError((e) {
-      throw (e);
+      // throw (e);
     });
     if (res.statusCode == 200) {
       bins = res.data.map((b) => Bin.fromJSON(b)).toList();
@@ -22,6 +23,4 @@ class BinsProvider extends ChangeNotifier {
     print(bins);
     notifyListeners();
   }
-
-  // Future<void> reportBin(int id, String photo) async {}
 }
