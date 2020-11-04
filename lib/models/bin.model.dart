@@ -17,6 +17,14 @@ class Bin {
     address = "-";
   }
 
+  Bin.fromJSONPickup(Map<String, dynamic> json) {
+    id = json["id"];
+    location = LatLng(json["bin"]["lat"], json["bin"]["lng"]);
+    material = json["bin"]["material"];
+    isFull = ["time"] == null;
+    address = "";
+  }
+
   String locationString() =>
       '(${location.latitude.toStringAsPrecision(4)} - ${location.longitude.toStringAsPrecision(4)})';
 }

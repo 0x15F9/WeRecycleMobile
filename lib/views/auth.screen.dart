@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:provider/provider.dart';
+import 'package:werecycle/provider/bins.provider.dart';
 import 'package:werecycle/utils/router.dart';
 import 'package:werecycle/utils/theme_config.dart';
 import 'package:werecycle/views/home.screen.dart';
@@ -20,6 +22,8 @@ class _AuthScreenState extends State<AuthScreen> {
   bool loading = false;
 
   void _verifyPhoneNumber(String phoneNumber) async {
+    String oldP = phoneNumber;
+    phoneNumber = '+230$phoneNumber';
     setState(() {
       loading = !loading;
     });
@@ -29,7 +33,7 @@ class _AuthScreenState extends State<AuthScreen> {
       timeout: const Duration(seconds: 60),
       verificationCompleted: (PhoneAuthCredential credential) {
         print("Logged in through auto verify");
-        GetStorage()..write("phoneNumber", phoneNumber);
+        GetStorage()..write("phoneNumber", oldP);
         MyRouter.pushPage(context, MainScreen());
       },
       verificationFailed: (FirebaseAuthException e) {
@@ -187,7 +191,14 @@ class _AuthScreenState extends State<AuthScreen> {
                   height: 42,
                   child: FlatButton(
                     onPressed: () => MyRouter.pushPageReplacement(
-                        context, HomeScreen(showAppbar: true)),
+                        context,
+                        MultiProvider(
+                          providers: [
+                            ChangeNotifierProvider(
+                                create: (context) => BinsProvider()),
+                          ],
+                          child: HomeScreen(showAppbar: true),
+                        )),
                     child: Text(
                       "Skip Login",
                       style: TextStyle(
