@@ -6,6 +6,7 @@ class Bin {
   String address;
   String material;
   bool isFull;
+  double weight;
 
   Bin(this.id, this.location, this.address, this.material, this.isFull);
 
@@ -21,7 +22,7 @@ class Bin {
     id = json["id"];
     location = LatLng(json["bin"]["lat"], json["bin"]["lng"]);
     material = json["bin"]["material"];
-    isFull = ["time"] == null;
+    isFull = ["time"] == null; // isFull => collected
     address = "";
   }
 

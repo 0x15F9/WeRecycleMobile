@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:sweetalert/sweetalert.dart';
 import 'package:werecycle/components/bin_details.tile.dart';
 import 'package:werecycle/components/pickup_details.tile.dart';
 import 'package:werecycle/models/bin.model.dart';
@@ -36,23 +38,38 @@ class _PickupScreenState extends State<PickupScreen> {
     super.initState();
   }
 
+  Future<void> acceptRequest() async {
+    Dio dio = new Dio();
+    await dio.post('${Constants.baseURL}/Pickups/Accept',
+        queryParameters: {"id": widget.pickup.id});
+    setState(() {
+      widget.pickup.accepted = true;
+    });
+    SweetAlert.show(
+      context,
+      title: "Great!",
+      subtitle: "We have taken note of your response.",
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.pickup.accepted ? 'Details' : 'Request'),
         actions: [
-          widget.pickup.accepted
-              ? FlatButton.icon(
-                  onPressed: () {},
-                  label: Text("Done", style: TextStyle(color: Colors.white)),
-                  icon: Icon(Feather.check, color: Colors.white),
-                )
-              : FlatButton.icon(
-                  onPressed: () {},
-                  label: Text("Accept", style: TextStyle(color: Colors.white)),
-                  icon: Icon(Feather.check, color: Colors.white),
-                ),
+          if (!widget.pickup.accepted)
+            // ? FlatButton.icon(
+            //     onPressed: () {},
+            //     label: Text("Done", style: TextStyle(color: Colors.white)),
+            //     icon: Icon(Feather.check, color: Colors.white),
+            //   )
+            // :
+            FlatButton.icon(
+              onPressed: acceptRequest,
+              label: Text("Accept", style: TextStyle(color: Colors.white)),
+              icon: Icon(Feather.check, color: Colors.white),
+            ),
         ],
       ),
       body: CustomScrollView(
@@ -84,6 +101,7 @@ class _PickupScreenState extends State<PickupScreen> {
             delegate: SliverChildBuilderDelegate(
               (context, index) => widget.pickup.accepted
                   ? PickupDetailsTile(
+                      pickupId: widget.pickup.id,
                       bin: widget.pickup.bins.elementAt(index),
                       itemSelectedCallback: (_) =>
                           _onTileTapped(widget.pickup.bins.elementAt(index)),

@@ -6,7 +6,6 @@ import 'package:werecycle/provider/requests.provider.dart';
 import 'package:werecycle/utils/dialogs.dart';
 import 'package:werecycle/views/home.screen.dart';
 import 'package:werecycle/views/notifications.screen.dart';
-import 'package:werecycle/views/notify_full.screen.dart';
 import 'package:werecycle/views/profile.screen.dart';
 
 class MainScreen extends StatefulWidget {
