@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:werecycle/main.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -41,7 +41,8 @@ class ProfileScreen extends StatelessWidget {
                 borderSide: BorderSide(color: Colors.red),
                 onPressed: () {
                   GetStorage().erase();
-                  runApp(MyApp());
+                  // runApp(MyApp());
+                  Phoenix.rebirth(context);
                 },
               ),
             ),

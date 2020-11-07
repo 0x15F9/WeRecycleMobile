@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:werecycle/provider/bins.provider.dart';
 import 'package:werecycle/utils/constants.dart';
 import 'package:werecycle/utils/theme_config.dart';
 import 'package:werecycle/views/splash.screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(Phoenix(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
